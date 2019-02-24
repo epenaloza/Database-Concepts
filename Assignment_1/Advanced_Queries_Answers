@@ -1,0 +1,73 @@
+Enrique Penaloza
+Database HW Assignment 3
+
+
+1. Create an Oracle table for the following STUDENT data:
+
+CREATE TABLE STUDENT(
+	ID	INTEGER,
+	Name	VARCHAR(20) not null,
+	Major	VARCHAR(3) not null,
+	Course VARCHAR(6) not null,
+	Assignment_1	INTEGER,
+	Assignment_2	INTEGER,
+	Midterm	INTEGER,
+	Final		INTEGER,
+	Project	INTEGER,
+		PRIMARY KEY(ID));
+
+2. Create insert statements to enter the data into your table.
+
+INSERT INTO STUDENT(ID,Name,Major,Course,Assignment_1,Assignment_2,Midterm,Final,Project) VALUES (‘001’, ‘Steve Wozniak’, ‘CIT’, ‘CIT365’,
+	83, 91,77,82,71);
+INSERT INTO STUDENT(ID,Name,Major,Course,Assignment_1,Assignment_2,Midterm,Final,Project) VALUES (‘002’, ‘Steve Jobs’, ‘BUS’, ‘CIT365’,
+	77, 81, 66, 76, 81);
+INSERT INTO STUDENT(ID,Name,Major,Course,Assignment_1,Assignment_2,Midterm,Final,Project) VALUES (‘003’, ‘Bill Gates’, ‘EDC’, ‘CIT365’,
+	91, 79, 92, 88, 91);
+INSERT INTO STUDENT VALUES (‘004’, ‘Alan Kay’, ‘CIT’, ‘CIT365’, 66, 55, 60, 73, 69);
+INSERT INTO STUDENT VALUES (‘005’, ‘Alan Turing’, ‘CIT’, ‘CIT365’, 58, 72, 88, 81, 88);
+INSERT INTO STUDENT VALUES (‘006’, ‘Ted Codd’, ‘CIT’, ‘CIT365’, 100, 92, 90, 91, 95);
+INSERT INTO STUDENT VALUES (’007’, ‘Michael Stonebraker’, ‘CIT’, ‘CIT365’, 93, 88, 83, 81, 83);
+INSERT INTO STUDENT VALUES (’008’, ‘Adelle Goldberg’, ‘EDC’, ‘CIT365’, 67, 72, 78, 74, 81);
+INSERT INTO STUDENT VALUES (’009’, ‘Paul Allen’, ‘CIT’, ‘CIT365’, 82, 86, 84, 91, 93);
+INSERT INTO STUDENT VALUES (’010’, ‘Larry Ellison’, ‘BUS’, ‘CIT365’, 89, 96, 92, 98, 92);
+
+3. Write queries to answer the following:
+	3a. How many students are there in the course?
+		SELECT COUNT(*), 
+		FROM STUDENT;
+	3b. Which students have the letter “s” in their names?
+		SELECT Name
+		FROM STUDENT,
+		WHERE NAME = ’%s%’;
+	3c. What is the average score for each student. Assume that all assignments have equal weight.
+		SELECT Name, ((Assignment_1+ Assignment_2 + Midterm + Final + Project) / 5) as AVERAGE_SCORE
+		FROM STUDENT;
+		
+	3d. What is the average score for the student who scored highest on the midterm?
+		SELECT Name, (Assignment_1+Assignment_2+Midterm+Final+Project)/5) as AVERAGE_SCORE
+		FROM STUDENT,
+		WHERE Midterm = (SELECT MAX(Midterm) FROM STUDENT);
+
+	3e. List the data sorted by Major and within major in Name.
+		SELECT *,
+		FROM STUDENT,
+		ORDER BY Major, Name;
+	3f. List those students who scored less than 70 on any assignment.
+		SELECT *,
+		FROM STUDENT,
+		WHERE Assignment_1 < 70 OR Assignment_2 < 70 OR Midterm < 70 OR Final= 70 OR Project <70;
+
+	3g. List the majors and the number of students in each major.
+		SELECT DISTINCT Majors, COUNT(Majors) as Number_Of_Students,
+		FROM STUDENT,
+		GROUP BY Majors;
+		
+	3h. List the average overall grade for each major.
+		SELECT DISTINCT Major, AVG( (Assignment_1+ Assignment_2 + Midterm + Final + Project) / 5)) AS Average_Overall_Grade,
+		FROM STUDENT;
+		GROUP BY Major;
+		
+		
+
+
